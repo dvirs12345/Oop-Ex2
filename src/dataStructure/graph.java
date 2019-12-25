@@ -6,7 +6,6 @@ import java.util.Collection;
  * The implementation should be based on an efficient compact representation (should NOT be based on a n*n matrix).
  *
  */
-
 public interface graph {
 	/**
 	 * return the node_data by the node_id,

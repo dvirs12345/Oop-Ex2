@@ -1,9 +1,7 @@
 package utils;
-
-//package stdDraw;
 // https://introcs.cs.princeton.edu/java/stdlib/StdDraw.java.html
 /******************************************************************************
- *  Compilation:  javac StdDraw.java
+ *  Compilation:  java StdDraw.java
  *  Execution:    java StdDraw
  *  Dependencies: none
  *
