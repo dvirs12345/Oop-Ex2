@@ -3,11 +3,15 @@ package dataStructure;
 import utils.Point3D;
 
 public class Node implements node_data {
-	int key;
+	int key = 0;
 	Point3D Location;
 	double Weight;
 	String Info;
 	int Tag;
+	
+	public Node () { ; }
+	
+	public Node(int key) { this.key = key; }
 	
 	@Override
 	public int getKey() {

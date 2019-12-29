@@ -8,6 +8,15 @@ public class Edge implements edge_data{
 	String Info;
 	int Tag;
 	
+	public Edge() { ; }
+	
+	public Edge(int Src, int Dest, double weight) 
+	{
+		this.Weight = weight;
+		this.Src = Src;
+		this.Dest = Dest;
+	}
+	
 	@Override
 	public int getSrc() {
 		return this.Src;

@@ -7,7 +7,7 @@ import dataStructure.node_data;
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
- * @author 
+ * @author Dvir Sadon and Tehila Bakshiel.
  *
  */
 public class Graph_Algo implements graph_algorithms{
