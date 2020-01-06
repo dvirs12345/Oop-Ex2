@@ -1,16 +1,20 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class DGraph implements graph
+public class DGraph implements graph , Serializable
 {
 	// HashMap of <id, Node>.
 	public HashMap<Integer , node_data> nodeHM = new HashMap<Integer,node_data>();
+	
 	// HashMap of <src, <dest, Edge>>.
 	public HashMap<Integer , HashMap<Integer, edge_data>> edgeHM = new HashMap<Integer , HashMap<Integer,edge_data>>();
+	
 	// The number of edges in the graph. 
 	private int edgeSize = 0;
+	
 	// Number of changes made.
 	private int MC = 0;
 	
