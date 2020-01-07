@@ -8,6 +8,10 @@ import org.junit.Test;
 import utils.Point3D;
 import dataStructure.*;
 import gui.Graph_Gui;
+/**
+ * A test class for Graph_Gui. 
+ * @author Dvir Sadon
+ */
 public class Graph_GuiTest
 {
 

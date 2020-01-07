@@ -10,21 +10,22 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import dataStructure.*;
 
 /**
- * This class represents the set of graph-theory algorithms
+ * This class represents the set of graph-theory algorithms.
  * @author Dvir Sadon and Tehila Bakshiel.
  */
 public class Graph_Algo implements graph_algorithms, Serializable
 {
-	
 	private static final long serialVersionUID = 1L;
 	
-	public graph g = null;
+	public graph g = null; // The graph the algorithms are used on.
 	
 	public Graph_Algo() { ; }
 	
@@ -57,7 +58,6 @@ public class Graph_Algo implements graph_algorithms, Serializable
 		{
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
@@ -89,7 +89,55 @@ public class Graph_Algo implements graph_algorithms, Serializable
 	@Override
 	public boolean isConnected() 
 	{
-		return false;
+		if(g.nodeSize() < 2)
+			return true;
+
+		boolean flag = false;
+		Iterator<node_data> NODE_Iterator = ((dataStructure.graph) g).getV().iterator();
+		Stack<node_data> s1 = new Stack<node_data>();
+
+		while(NODE_Iterator.hasNext())  
+		{
+			for (node_data nodes : ((dataStructure.graph) g).getV()) // Set all node tags to 0
+				nodes.setTag(0);
+
+			node_data currentNode = NODE_Iterator.next();
+			s1.add(currentNode);
+			currentNode.setTag(1);
+
+			if(!Neighbors(currentNode,s1).isEmpty())
+				flag = false;
+			else
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * @param currentNode - The node to make the stack with. 
+	 * @param s - The stack to update.
+	 * @return A new Stack containing the needed information.
+	 */
+	private Stack<node_data> Neighbors(node_data currentNode, Stack<node_data> s)
+	{
+		Iterator<edge_data> EDGE_iterator = ((DGraph) g).getE(currentNode.getKey()).iterator();
+		if(s.isEmpty()) 
+			return s;
+		
+		while(EDGE_iterator.hasNext()) 
+		{
+			edge_data e = EDGE_iterator.next();
+			if(((DGraph) g).getNode(e.getDest()).getTag() == 0) 
+			{
+				s.push(((DGraph) g).getNode(e.getDest()));
+				((DGraph) g).getNode(e.getDest()).setTag(1);
+				Neighbors(((DGraph) g).getNode(e.getDest()), s);
+			}
+		}
+		
+		s.pop();
+		return s;
 	}
 	
 	/**
@@ -172,7 +220,7 @@ public class Graph_Algo implements graph_algorithms, Serializable
 	 * @param arr - The array to search
 	 * @return The minimum node from the List
 	 */
-	private node_data getminNode (List<node_data> arr) 
+	private node_data getminNode(List<node_data> arr) 
 	{
 		if(arr.isEmpty()) 
 			return null;
@@ -210,6 +258,7 @@ public class Graph_Algo implements graph_algorithms, Serializable
 			if(currentNode.getKey()==g.getNode(src).getKey())
 				break;
 		}
+		
 		result.add(currentNode);
 		
 		List<node_data> result2 = new LinkedList<node_data>();
@@ -223,15 +272,88 @@ public class Graph_Algo implements graph_algorithms, Serializable
 	
 
 	@Override
-	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<node_data> TSP(List<Integer> targets)
+	{
+		if(targets.size() == 0)
+			return null;
+		else
+			if(targets.size() == 1)
+				return shortestPath(targets.get(0), targets.get(0));
+		
+		Collection<node_data> nodes = g.getV();
+		List<node_data> targetsN = new LinkedList<node_data>();
+		
+		for (node_data node:nodes) 
+			if(targets.contains(node.getKey()))
+				targetsN.add(node);
+		
+		List<node_data> result = new LinkedList<node_data>();
+		List<node_data> temp = new LinkedList<node_data>();
+		
+		for (node_data node:nodes) 
+			node.setTag(1);
+		
+		boolean flag = false;
+		for(int i = 1;i < this.g.nodeSize();i++) 
+		{
+			flag = false;
+			for (int j = 0; j < targetsN.size()-1; j++)
+			{
+				result.addAll(doesAPath(targetsN.get(j), targetsN.get(j+1)));
+				targetsN.get(j+1).setTag(0);
+				targetsN.get(j).setTag(0);
+			}
+			
+			for (int j = 0; j < targetsN.size(); j++)
+				if(targetsN.get(j).getTag() != 0)
+					flag = true;
+			
+			if(!flag)
+				break;
+			Collections.shuffle(targetsN);
+		}
+		
+		for (int i = 0; i < result.size()-1; i++) // Remove excess nodes from the path.
+			if(result.get(i) == result.get(i+1))
+				result.remove(i);
+		
+		return result;
+	}
+	
+	/**
+	 * Checks if a path from node1 to node2 exists, if so, return it. else, returns null.
+	 * @param node_data - The source. 
+	 * @param node_data2 - The destination.
+	 * @return The shortest from node1 to node2. If its null, the null. 
+	 */
+	private List<node_data> doesAPath(node_data node1, node_data node2) 
+	{
+		List<node_data> result = shortestPath(node1.getKey(), node2.getKey());
+		if(result==null) 
+			return null;
+		return result;
 	}
 
+	/**
+	 * Adds the first list to the second one.
+	 * @param l1 - The First List
+	 * @param l2 - The Second List
+	 * @return
+	 */
+	private List<node_data> mergelists(List<node_data> l1, List<node_data> l2) 
+	{
+		for (int i = 0; i < l2.size(); i++) 
+			l1.add(l2.get(i));
+		return l1;
+	}
+	
 	@Override
-	public graph copy() {
-		// TODO Auto-generated method stub
-		return null;
+	public graph copy()
+	{
+		Graph_Algo ga = new Graph_Algo();
+		this.save("temp.txt");
+		ga.init("temp.txt");
+		return (dataStructure.graph) ga.g;
 	}
 
 }

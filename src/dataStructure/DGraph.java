@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * A class that implements graph and contains basic operations on graphs.
+ * @author Dvir Sadon
+ */
 public class DGraph implements graph , Serializable
 {
 	// HashMap of <id, Node>.
@@ -109,7 +113,7 @@ public class DGraph implements graph , Serializable
 			if(edgeHM.get(i).containsKey(key)) 
 			{
 				this.edgeHM.get(i).remove(key);
-				this.edgeSize--;  // Not sure about this line.
+				this.edgeSize--;
 			}
 		}
 					

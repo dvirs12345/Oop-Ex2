@@ -1,12 +1,16 @@
 package dataStructure;
+/**
+ * A class implementing edge_data.
+ * @author Dvir Sadon
+ */
+public class Edge implements edge_data
+{
 
-public class Edge implements edge_data{
-
-	int Src;
-	int Dest;
-	double Weight;
-	String Info;
-	int Tag;
+	int Src; // The source from which the edge comes out of.
+	int Dest; // The destination to which the edge is going to.
+	double Weight; // The edge's weight. 
+	String Info; //The edge's info.
+	int Tag; // The edge's tag. 
 	
 	public Edge() { ; }
 	

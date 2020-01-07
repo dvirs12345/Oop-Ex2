@@ -1,13 +1,18 @@
 package dataStructure;
 
 import utils.Point3D;
-
-public class Node implements node_data {
-	int key = 0;
-	Point3D Location;
-	double Weight;
-	String Info;
-	int Tag;
+/**
+ * A class implementing node_data.
+ * @author Dvir Sadon.
+ *
+ */
+public class Node implements node_data 
+{
+	int key = 0; // The key/id of the node.
+	Point3D Location; // The location it should be on the graph.
+	double Weight; // The node's weight.
+	String Info; // The node's info.
+	int Tag; // The node's tag.
 	
 	public Node () { ; }
 	

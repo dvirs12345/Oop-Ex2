@@ -2,6 +2,7 @@ package algorithms;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -11,6 +12,10 @@ import dataStructure.Node;
 import dataStructure.node_data;
 import utils.Point3D;
 
+/**
+ * This class is a test class for Graph_Algo. 
+ * @author Dvir Sadon
+ */
 public class Graph_AlgoTest
 {
 
@@ -45,12 +50,37 @@ public class Graph_AlgoTest
 	}
 
 	@Test
-	public void testIsConnected() {
-		fail("Not yet implemented");
+	public void testIsConnected()
+	{
+		Graph_Algo ga = new Graph_Algo();
+		DGraph dg = new DGraph();
+		Node n1 = new Node(0);
+		n1.setLocation(new Point3D(0.1,0.9));
+		Node n2 = new Node(1);
+		n2.setLocation(new Point3D(0.5,0.5));
+		Node n3 = new Node(2);
+		n3.setLocation(new Point3D(0.2,0.2));
+		Node n4 = new Node(3);
+		n4.setLocation(new Point3D(0.1,0.4));
+		dg.addNode(n1);
+		dg.addNode(n2);
+		dg.addNode(n3);
+		dg.addNode(n4);
+		
+		dg.connect(0, 1, 50);
+		dg.connect(1, 2, 29);
+		dg.connect(2, 3, 2);
+		dg.connect(3, 0, 6);
+		dg.connect(1, 3, 5);
+		
+		ga.g = dg;
+		boolean flag = ga.isConnected();
+		assertEquals(true, flag);
 	}
 
 	@Test
-	public void testShortestPathDist() {
+	public void testShortestPathDist() 
+	{
 		Graph_Algo ga = new Graph_Algo();
 		DGraph dg = new DGraph();
 		Node n1 = new Node(0);
@@ -105,20 +135,59 @@ public class Graph_AlgoTest
 		ga.g = dg;
 		List<node_data> result = ga.shortestPath(0, 3);
 
-		for (int i = 0; i < result.size(); i++) 
+//		for (int i = 0; i < result.size(); i++) 
+//		{
+//			System.out.println(result.get(i).getKey());
+//		}
+	}
+
+	@Test
+	public void testTSP()
+	{
+		Graph_Algo ga = new Graph_Algo();
+		DGraph dg = new DGraph();
+		Node n1 = new Node(0);
+		n1.setLocation(new Point3D(0.1,0.9));
+		Node n2 = new Node(1);
+		n2.setLocation(new Point3D(0.5,0.5));
+		Node n3 = new Node(2);
+		n3.setLocation(new Point3D(0.2,0.2));
+		Node n4 = new Node(3);
+		n4.setLocation(new Point3D(0.1,0.4));
+		dg.addNode(n1);
+		dg.addNode(n2);
+		dg.addNode(n3);
+		dg.addNode(n4);
+		
+		dg.connect(0, 1, 50);
+		dg.connect(1, 2, 29);
+		dg.connect(2, 3, 2);
+		dg.connect(3, 0, 6);
+		dg.connect(1, 3, 5);
+		
+		ga.g = dg;
+		
+		List<Integer> nodes1 = new LinkedList<Integer>();
+		nodes1.add(0);
+		nodes1.add(3);
+		nodes1.add(2);
+		List<node_data> result = ga.TSP(nodes1);
+		
+		if(result == null)
+			System.out.println("Null");
+		else 
 		{
-			System.out.println(result.get(i).getKey());
+			for (int i = 0; i < result.size(); i++) 
+				System.out.println(result.get(i).getKey());
+			System.out.println(result);
 		}
+			
 	}
 
 	@Test
-	public void testTSP() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCopy() {
-		fail("Not yet implemented");
+	public void testCopy()
+	{
+		;
 	}
 
 }
